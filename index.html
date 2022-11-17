@@ -4,97 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="src/style.css"/></link>
+   <link rel="stylesheet" href="src/style.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">	
    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;1,100;1,200&family=Roboto+Condensed:ital,wght@1,300&display=swap" rel="stylesheet">
-    <title>Vanilla Weather App</title>
+     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+   <title>Vanilla Weather App</title>
 </head>
 <body>
-  <div class="nawv0d" data-ve-view="2338" id="Sunny">
-    <div class="UQt4rd">
-<img class="wob_tci" alt="Sunny" src="//ssl.gstatic.com/onebox/weather/64/sunny.png" id="wob_tci" data-atf="5" data-frt="0">
-
-<div jscontroller="e0Sh5" class="Ab33Nc" aria-level="3" role="heading">…
-  <div class="wtsRwe">
-    <div>
-      "Precipitation: "
-      <span id="wob_pp">0%</span>
-      <div>
-        "Humidity: "
-        <span id="wob_hm">39%</span>
-        <div>
-            "Wind: "
-          <span>
-            <span class="wob_t" id="wob_ws">16 mph
-              <span class="wob_t" style="display:none" id="wind">26 km/h</span>
-            
-            </span>
-          </span>
-        </div>
-        </div>
-      </div>
-      <div class="VQF4g">
-        <span aria-level="3" role="heading">… </span>
-      </div>
-      <div id="wob_d">…
-        <div style="padding:10px 0">
-        <div class="ksb ksbs" aria-disabled="true" id="wob_temp" role="button" tabindex="0" data-ved="2ahUKEwitoa2rvrX7AhXCFlkFHbLEBtAQs6MEegQICRAD">Temperature</div>
-        <div class="ksb" aria-disabled="false" id="wob_rain" role="button" tabindex="0" data-ved="2ahUKEwitoa2rvrX7AhXCFlkFHbLEBtAQsqMEegQICRAE">Precipitation</div>
-       <span class="WQNOrf"></span>
-      <div class="ksb" aria-disabled="false" id="wob_wind" role="button" tabindex="0" data-ved="2ahUKEwitoa2rvrX7AhXCFlkFHbLEBtAQtKMEegQICRAF">Wind</div>
-      </div>
-      <div class="R3Y3ec rr3bxd">
-        <div class="wob_dfc" id="wob_dp" data-ved="2ahUKEwitoa2rvrX7AhXCFlkFHbLEBtAQimt6BAgJEAk" style="left: 0px; top: 0px; transform: translate3d(0px, 0px, 0px); transition: -webkit-transform 0ms ease-in-out 0s;">
-        <div class="wob_df wob_ds" data-wob-di="0" role="button" tabindex="0" data-ved="2ahUKEwitoa2rvrX7AhXCFlkFHbLEBtAQi2soAHoECAkQCg">
-          <div class="Z1VzSb" aria-label="Thursday">Thu</div>
-          <div class="DxhUm">
-            <img class="uW5pk" alt="Sunny" src="//ssl.gstatic.com/onebox/weather/48/sunny.png" data-atf="4" data-frt="0">
+  <div class="container">
+      <div class="weather-app-wrapper">
+        <div class="weather-app">
+          <form id="search-form" class="mb-3">
+            <div class="row">
+              <div class="col-7">
+                <input
+                  type="search"
+                  placeholder="Search for a city..."
+                  class="form-control"
+                  id="city-input"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col-2">
+                <input
+                  type="submit"
+                  value="Search"
+                  class="btn btn-primary w-100"
+                />
+              </div>
+            </div>
+          </form>
+          <div class="overview">
+            <h1 id="current-city">New York</h1>
+            <ul>
+              <li>Last updated: <span id="current-date"></span></li>
+              <li id="current-description"></li>
+            </ul>
           </div>
-          <div class="wNE31c"><div class="gNCp2e"><span class="wob_t" style="display:inline">46</span><span class="wob_t" style="display:none">8</span>°</div><div class="QrNVmd ZXCv8e"><span class="wob_t" style="display:inline">29</span><span class="wob_t" style="display:none">-2</span>°</div></div>
+          <div class="row">
+            <div class="col-6">
+              <div class="d-flex weather-temperature">
+                <img src="" alt="" id="icon" />
+                <div>
+                  <strong id="current-temperature"></strong>
+                  <span class="units"> °F </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <ul>
+                <li>Humidity: <span id="humidity"></span>%</li>
+                <li>Wind: <span id="wind"></span> km/h</li>
+              </ul>
+            </div>
           </div>
+          <div class="weather-forecast" id="forecast"></div>
         </div>
-        <div class="wob_df" data-wob-di="2" role="button" tabindex="0" data-ved="2ahUKEwitoa2rvrX7AhXCFlkFHbLEBtAQi2soAnoECAkQDA"><div class="Z1VzSb" aria-label="Saturday">Sat</div><div class="DxhUm"><img class="uW5pk" alt="Partly cloudy" src="//ssl.gstatic.com/onebox/weather/48/partly_cloudy.png" data-atf="4" data-frt="0"></div><div class="wNE31c"><div class="gNCp2e"><span class="wob_t" style="display:inline">45</span><span class="wob_t" style="display:none">7</span>°</div><div class="QrNVmd ZXCv8e"><span class="wob_t" style="display:inline">29</span><span class="wob_t" style="display:none">-2</span>°</div></div></div>
-        <div class="Z1VzSb" aria-label="Saturday">Sat</div>
-        </div>
-         <div class="wob_df" data-wob-di="3" role="button" tabindex="0" data-ved="2ahUKEwitoa2rvrX7AhXCFlkFHbLEBtAQi2soA3oECAkQDQ">…
-          <div class="Z1VzSb" aria-label="Sunday">Sun</div>
-          <div class="DxhUm">
-            <img class="uW5pk" alt="Sunny" src="//ssl.gstatic.com/onebox/weather/48/sunny.png" data-atf="4" data-frt="0">
-          </div>
-        <div class="wNE31c">
-<div class="gNCp2e">
-  <span class="wob_t" style="display:inline">37</span>
-  <span class="wob_t" style="display:none">3</span>
-  "°"
-</div>
-<div class="QrNVmd ZXCv8e"></div>
-        </div>
-        </div>
-        <div class="wob_df" data-wob-di="4" role="button" tabindex="0" data-ved="2ahUKEwitoa2rvrX7AhXCFlkFHbLEBtAQi2soBHoECAkQDg">
-<div class="Z1VzSb" aria-label="Monday">Mon</div>
-<div class="DxhUm">…
-  <img class="uW5pk" alt="Sunny" src="//ssl.gstatic.com/onebox/weather/48/sunny.png" data-atf="4" data-frt="0">
-</div>
-<div class="wNE31c">
-  <div class="gNCp2e">…</div>
-  <div class="QrNVmd ZXCv8e">
-    <span class="wob_t" style="display:inline">29</span>
-    "°"
-  </div>
-</div>
-      </div>
-      </div>
-      <span jscontroller="eLOmLe">…</span>
-    </div>
-    </div>
-    <span id="z9PoV"></span>
-    <script nonce></script>
-  </div>
-</div>
-    </div>
-  </div>
-  </div> 
-  </div>
+        <small>
+          <a href="https://github.com/khaliasjohnson25?tab=repositories"
+          > Open-source code by</a>
+          Khalia Santos-Johnson
+        </small>
   <script src="index.js"></script>
 </body>
 </html>
