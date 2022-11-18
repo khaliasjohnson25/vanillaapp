@@ -40,7 +40,24 @@ function displayForecast(response) {
     if (index < 6) {
       forecastHTML =
         forecastHTML +
-        
+    '  <div class="col-2">
+      <div class="forecast-date">${formatDay(forecastDay.dt)}</div>
+      <img
+         src="http://openweathermap.org/img/wn/${
+           forecastDay.weather[0].icon
+         }@2x.png"
+        alt="thursday"
+        width="40"
+      />
+      <div class="weather-forecast-temperature">
+        <span class="max-temperature-forecast">${Math.round(
+          forecastDay.temp.max
+        )}°</span>
+        <span class="min-temperature-forecast">${Math.round(
+          forecastDay.temp.min
+        )}°</span>
+      </div>
+    </div>  
     }
   });
 
