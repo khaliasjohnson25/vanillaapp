@@ -109,4 +109,27 @@ function handleSubmit(event) {
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
-search("New York","Washington DC","Los Angeles")
+search("New York","Washington","Los Angeles")
+
+<script type="text/javascript">// <![CDATA[
+        //run this code when the page loads
+        jQuery(document).ready(function(){  
+            //call the getGeolocation function below
+            getGeolocation();
+        });  
+        //determine if the user's browser has location services enabled. If not, show a message
+        function getGeolocation() { 
+            if(navigator.geolocation){
+                //if location services are turned on, continue and call the getUserCoordinates function below
+                 navigator.geolocation.getCurrentPosition(getUserCoodinates);  
+            }else{
+                alert('You must enable your device\'s location services in order to run this application.');
+            }
+        }  
+        //function is passed a position object which contains the lat and long value
+        function getUserCoodinates(position){  
+            //set the application's text inputs LAT and LONG = to the user's lat and long position
+            jQuery("#LAT").val(position.coords.latitude);
+            jQuery("#LONG").val(position.coords.longitude);
+        }
+// ]]></script>
