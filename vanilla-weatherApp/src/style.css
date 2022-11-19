@@ -80,3 +80,6 @@ li {
   color: #48484a;
   opacity: 0.6;
 }
+.current-location {
+  background: rgb(165, 209, 209)
+}
