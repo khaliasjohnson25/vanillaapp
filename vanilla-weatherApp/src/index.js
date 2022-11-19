@@ -40,22 +40,20 @@ function displayForecast(response) {
     if (index < 6) {
       forecastHTML =
         forecastHTML +
-        ` <div class="col-2">
-      <div class="weather-forecast-date">${formatDay(forecastDay.time * 1000)}</div>
-      <img
-         src="{forecastDay.condition.icon_url}"
-        alt=""
-        width="42"
-      />
-      <div class="weather-forecast-temperatures">
-        <span class="weather-forecast-temperature-max">${Math.round(
-          forecastDay.temp.max
-        )}°</span>
-        <span class="weather-forecast-temperature-min">${Math.round(
-          forecastDay.temp.min
-        )}° </span>
-      </div>
-    </div>`;
+    ' <div class="col-2">
+      <div class="forecast-date">${formatDay(forecastDay.time * 1000)}</div>
+      
+          src="${forecastDay.condition.icon_url}"
+          alt=""
+          width="42" /><div class="weather-forecast-temperatures">
+            <span class="weather-forecast-temperature-max">${Math.round(
+              forecastDay.temp.max
+            )}°</span>
+            <span class="weather-forecast-temperature-min">${Math.round(
+              forecastDay.temp.min
+            )}°</span>
+          </div>
+    </div>`;  
     }
   });
 
@@ -66,8 +64,7 @@ function displayForecast(response) {
 
 function getForecast(coordinates) {
   let apiKey = "a34tf68cfb143a32002a6d05a5caocaf";
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(displayTemperature);
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=-77.0365427&lat=38.8950368&key=a34tf68cfb143a32002a6d05a5caocaf&units=metric`;
   axios.get(apiUrl).then(displayForecast);
 }
 
@@ -80,26 +77,26 @@ function displayTemperature(response) {
   let dateElement = document.querySelector("#current-date");
   let iconElement = document.querySelector("#icon");
 
-  celciusTemperature = response.data.main.temp;
+  celciusTemperature = response.data.temperature.current;
 
-  temperatureElement.innerHTML = Math.round(response.data.main.temp);
-  cityElement.innerHTML = response.data.name;
-  currentDescription.innerHTML = response.data.weather[0].description;
-  currentHumidity.innerHTML = response.data.main.humidity;
+  temperatureElement.innerHTML = Math.round(response.data.temperature.current);
+  cityElement.innerHTML = response.data.city;
+  currentDescription.innerHTML = response.data.condition.description;
+  currentHumidity.innerHTML = response.data.temperature.humidity;
   currentWind.innerHTML = Math.round(response.data.wind.speed);
-  dateElement.innerHTML = formatDate(response.data.dt * 1000);
+  dateElement.innerHTML = formatDate(response.data. time * 1000);
   iconElement.setAttribute(
     "src",
-    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    response.data.condition.icon_url
   );
-  iconElement.setAttribute("alt", response.data.weather[0].description);
+  iconElement.setAttribute("alt", response.data.condition.description);
 
-  getForecast(response.data.coord);
+  getForecast(response.data.coordinates);
 }
 
 function search(city) {
   let apiKey = "a34tf68cfb143a32002a6d05a5caocaf";
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query={query}&key={key}units=metric`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=washington&key=a34tf68cfb143a32002a6d05a5caocaf&units=metric`;
   axios.get(apiUrl).then(displayTemperature);
 }
 
@@ -112,4 +109,4 @@ function handleSubmit(event) {
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
-search("New York","Washington DC","Los Angeles");
+search("New York","Washington DC","Los Angeles")
