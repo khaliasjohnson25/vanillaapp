@@ -80,3 +80,4 @@ form.addEventListener("submit", handleSubmit);
 
 search("New York","Washington","Los Angeles")
 
+function click(event)
