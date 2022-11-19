@@ -97,8 +97,13 @@ function displayTemperature(response) {
 }
 
 function search(city) {
+<<<<<<< Updated upstream
   let apiKey = "a34tf68cfb143a32002a6d05a5caocaf";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+=======
+  let apiKey = "2ff29bed3181c3526c35cc5408037f85";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${WashingtonDC}&appid=${apiKey}&units=metric`;
+>>>>>>> Stashed changes
   axios.get(apiUrl).then(displayTemperature);
 }
 
