@@ -40,13 +40,10 @@ function displayForecast(response) {
     if (index < 6) {
       forecastHTML =
         forecastHTML +
-    '
-      <div class="col-2">
-      <div class="forecast-date">${formatDay(forecastDay.dt)}</div>
+    ' <div class="col-2">
+      <div class="forecast-date">${formatDay(forecastDay.time * 1000)}</div>
       <img
-         src="http://openweathermap.org/img/wn/${
-           forecastDay.weather[0].icon
-         }@2x.png"
+         src="${forecastDay.condition.icon_url}"
         alt=""
         width="42"
       />
@@ -69,7 +66,7 @@ function displayForecast(response) {
 
 function getForecast(coordinates) {
   let apiKey = "a34tf68cfb143a32002a6d05a5caocaf";
-  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query={query}&key={key}&units=metric`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${coordinates.longitude}&lat=${coordinates.latitude}&key=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayForecast);
 }
 
@@ -92,16 +89,16 @@ function displayTemperature(response) {
   dateElement.innerHTML = formatDate(response.data.dt * 1000);
   iconElement.setAttribute(
     "src",
-    `"http://shecodes-assets.s3.amazonaws.com/api/weather/icons${response.data.weather[0].icon}@2x.png`
+    response.data.weather.icon_url
   );
-  iconElement.setAttribute("alt", response.data.weather[0].description);
+  iconElement.setAttribute("alt", response.data.condition.description);
 
-  getForecast(response.data.coord);
+  getForecast(response.data.coordinates);
 }
 
 function search(city) {
   let apiKey = "a34tf68cfb143a32002a6d05a5caocaf";
-  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query={query}&key={key}&units=metric`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayTemperature);
 }
 
