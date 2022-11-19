@@ -42,19 +42,17 @@ function displayForecast(response) {
         forecastHTML +
     ' <div class="col-2">
       <div class="forecast-date">${formatDay(forecastDay.time * 1000)}</div>
-      <img
-         src="${forecastDay.condition.icon_url}"
-        alt=""
-        width="42"
-      />
-      <div class="weather-forecast-temperatures">
-        <span class="weather-forecast-temperature-max">${Math.round(
-          forecastDay.temp.max
-        )}°</span>
-        <span class="weather-forecast-temperature-min">${Math.round(
-          forecastDay.temp.min
-        )}°</span>
-      </div>
+      <><img
+          src="${forecastDay.condition.icon_url}"
+          alt=""
+          width="42" /><div class="weather-forecast-temperatures">
+            <span class="weather-forecast-temperature-max">${Math.round(
+              forecastDay.temp.max
+            )}°</span>
+            <span class="weather-forecast-temperature-min">${Math.round(
+              forecastDay.temp.min
+            )}°</span>
+          </div></>
     </div>`;  
     }
   });
@@ -79,17 +77,17 @@ function displayTemperature(response) {
   let dateElement = document.querySelector("#current-date");
   let iconElement = document.querySelector("#icon");
 
-  celciusTemperature = response.data.main.temp;
+  celciusTemperature = response.data.temperature.current;
 
-  temperatureElement.innerHTML = Math.round(response.data.main.temp);
-  cityElement.innerHTML = response.data.name;
-  currentDescription.innerHTML = response.data.weather[0].description;
-  currentHumidity.innerHTML = response.data.main.humidity;
+  temperatureElement.innerHTML = Math.round(response.data.temperature.current);
+  cityElement.innerHTML = response.data.city;
+  currentDescription.innerHTML = response.data.condition.description;
+  currentHumidity.innerHTML = response.data.temperature.humidity;
   currentWind.innerHTML = Math.round(response.data.wind.speed);
-  dateElement.innerHTML = formatDate(response.data.dt * 1000);
+  dateElement.innerHTML = formatDate(response.data. time * 1000);
   iconElement.setAttribute(
     "src",
-    response.data.weather.icon_url
+    response.data.condition.icon_url
   );
   iconElement.setAttribute("alt", response.data.condition.description);
 
@@ -97,13 +95,8 @@ function displayTemperature(response) {
 }
 
 function search(city) {
-<<<<<<< Updated upstream
   let apiKey = "a34tf68cfb143a32002a6d05a5caocaf";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-=======
-  let apiKey = "2ff29bed3181c3526c35cc5408037f85";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${WashingtonDC}&appid=${apiKey}&units=metric`;
->>>>>>> Stashed changes
   axios.get(apiUrl).then(displayTemperature);
 }
 
